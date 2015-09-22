@@ -28,7 +28,8 @@ function FoCMultiFileUploadCheck() {
         MyNewFunction();
     }
     else if (FoCNumberofDroppedFiles > 1) {
-        alert("Multiple files uploaded, edit via datasheet view(in development)");
+        alert("Multiple files uploaded, please add Business Area Metadata to each item");
+        window.location.href("/library/upload/forms/datasheet.aspx");
     }
     else {
         alert("Error: FoCMultiFileUpload Check edge case, not 1 or >1");
@@ -49,7 +50,7 @@ function MyNewFunction() {
 
     var ctx = SP.ClientContext.get_current()
     var web = ctx.get_web();
-    var list = web.get_lists().getByTitle("Documents")
+    var list = web.get_lists().getByTitle("Upload")
     var query = new SP.CamlQuery();
     query.set_viewXml(caml);
     var items = list.getItems(query);
@@ -71,7 +72,7 @@ function MyNewFunction() {
 function _MyGotoEditForm(id) {
     var options = SP.UI.$create_DialogOptions();
     options.title = "Add File Metadata";
-    options.url = "../Lists/Documents/Forms/EditForm.aspx?ID=" + id;
+    options.url = "/Library/Upload/Forms/EditForm.aspx?ID=" + id;
     options.dialogReturnValueCallback = Function.createDelegate(null, CloseCallback);
     options.autoSize = true; SP.UI.ModalDialog.showModalDialog(options);
     return false;
